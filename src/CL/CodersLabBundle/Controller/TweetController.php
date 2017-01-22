@@ -6,19 +6,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use CL\CodersLabBundle\Entity\tweet;
 use CL\CodersLabBundle\Repository\tweetRepository;
+use Symfony\Component\HttpFoundation\Request;
 
 class TweetController extends Controller {
 
     /**
      * @Route("/create",name="CLCodersLabBundle_tweet_create")
      */
-    public function createAction() {
+    public function createAction(Request $req) {
 
 
         $tweet=new tweet();
         $form=$this->createTweetForm($tweet);
         
-        $form->handleRequest();
+        $form->handleRequest($req);
         if($form->isSubmitted()){
             $tweet=$form->getData();
             $em=$this->getDoctrine()->getManager();
