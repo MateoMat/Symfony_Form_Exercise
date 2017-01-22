@@ -17,7 +17,9 @@ class TweetController extends Controller {
     public function updateAction($id) {
 
         $tweet = $this->getDoctrine()->getRepository('CLCodersLabBundle:tweet')->findOneById($id);
-        $form = $this->createTweetForm($tweet);
+        $url = $this->generateUrl('CLCodersLabBundle_tweet_updateTweet', array('id' => $id));
+
+        $form = $this->createTweetForm($tweet, $url);
 
         return $this->render('CLCodersLabBundle:Tweet:new.html.twig', array(
                     'form' => $form->createView()
@@ -48,13 +50,36 @@ class TweetController extends Controller {
         }
     }
 
+    /**
+     * @Route("/updateTweet/{id}",name="CLCodersLabBundle_tweet_updateTweet")
+     */
+    public function updateTweetAction(Request $req, $id) {
+
+        $tweet = $this->getDoctrine()->getRepository('CLCodersLabBundle:tweet')->findOneById($id);
+        $form = $this->createTweetForm($tweet);
+
+        $form->handleRequest($req);
+        
+        if ($form->isSubmitted()) {//if is send
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($tweet);
+            $em->flush();
+            
+            return $this->redirect($this->generateUrl('CLCodersLabBundle_tweet_showAll'));
+            
+        }
+
+        
+        
+    }
+
     /*
      * Form builder for new and create actions
      */
 
-    private function createTweetForm(tweet $tweetObj) {
+    private function createTweetForm(tweet $tweetObj, $url = '#') {
 
-        $url = $this->generateUrl('CLCodersLabBundle_tweet_create');
+
 
         $form = $this->createFormBuilder($tweetObj)
                 ->setAction($url)
@@ -73,7 +98,8 @@ class TweetController extends Controller {
     public function newAction() {
 
         $tweet = new tweet();
-        $form = $this->createTweetForm($tweet);
+        $url = $this->generateUrl('CLCodersLabBundle_tweet_create');
+        $form = $this->createTweetForm($tweet, $url);
 
 
 
