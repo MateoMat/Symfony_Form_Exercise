@@ -15,6 +15,17 @@ class TweetController extends Controller {
     public function createAction() {
 
 
+        $tweet=new tweet();
+        $form=$this->createTweetForm($tweet);
+        
+        $form->handleRequest();
+        if($form->isSubmitted()){
+            $tweet=$form->getData();
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($tweet);
+            $em->flush();
+        }
+                
         return $this->render('CLCodersLabBundle:Tweet:create.html.twig', array(
                         // ...
         ));
