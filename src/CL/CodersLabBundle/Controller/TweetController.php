@@ -24,11 +24,16 @@ class TweetController extends Controller {
             $em=$this->getDoctrine()->getManager();
             $em->persist($tweet);
             $em->flush();
+            
+            $url=$this->generateUrl('CLCodersLabBundle_tweet_showAll');
+            return $this->redirect($url);
+        }else{
+            $url=$this->generateUrl('CLCodersLabBundle_tweet_new');
+            return $this->redirect($url);
         }
+        
                 
-        return $this->render('CLCodersLabBundle:Tweet:create.html.twig', array(
-                        // ...
-        ));
+        
     }
 
     /*
@@ -51,7 +56,7 @@ class TweetController extends Controller {
     }
 
     /**
-     * @Route("/new")
+     * @Route("/new",name="CLCodersLabBundle_tweet_new")
      */
     public function newAction() {
 
@@ -66,7 +71,7 @@ class TweetController extends Controller {
     }
 
     /**
-     * @Route("/showAll")
+     * @Route("/showAll",name="CLCodersLabBundle_tweet_showAll")
      */
     public function showAllAction() {
         $tweets = $this->getDoctrine()->getRepository('CLCodersLabBundle:tweet')->findAll();
