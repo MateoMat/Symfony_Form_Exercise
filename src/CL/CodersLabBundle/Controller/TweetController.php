@@ -11,30 +11,41 @@ use Symfony\Component\HttpFoundation\Request;
 class TweetController extends Controller {
 
     /**
+     * 
+     * @Route(""/update/{id}",name="CLCoderslabBundle_tweet_update")
+     */
+    public function updateAction($id) {
+
+        $tweet = $this->getDoctrine()->getRepository('CLCodersLabBundle:tweet')->findOneBy($id);
+        $form = $this->createTweetForm($tweet);
+
+        return $this->render('CLCodersLabBundle:Tweet:new.html.twig', array(
+                    'form' => $form->createView()
+        ));
+    }
+
+    /**
      * @Route("/create",name="CLCodersLabBundle_tweet_create")
      */
     public function createAction(Request $req) {
 
 
-        $tweet=new tweet();
-        $form=$this->createTweetForm($tweet);
-        
+        $tweet = new tweet();
+        $form = $this->createTweetForm($tweet);
+
         $form->handleRequest($req);
-        if($form->isSubmitted()){
-            $tweet=$form->getData();
-            $em=$this->getDoctrine()->getManager();
+        if ($form->isSubmitted()) {
+            $tweet = $form->getData();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($tweet);
             $em->flush();
-            
-            $url=$this->generateUrl('CLCodersLabBundle_tweet_showAll');
+
+            $url = $this->generateUrl('CLCodersLabBundle_tweet_showAll');
             return $this->redirect($url);
-        }else{
-            $url=$this->generateUrl('CLCodersLabBundle_tweet_new');
+        } else {
+            $url = $this->generateUrl('CLCodersLabBundle_tweet_new');
             return $this->redirect($url);
         }
-        
-                
-        
     }
 
     /*
@@ -42,9 +53,9 @@ class TweetController extends Controller {
      */
 
     private function createTweetForm(tweet $tweetObj) {
-        
-        $url=$this->generateUrl('CLCodersLabBundle_tweet_create');
-        
+
+        $url = $this->generateUrl('CLCodersLabBundle_tweet_create');
+
         $form = $this->createFormBuilder($tweetObj)
                 ->setAction($url)
                 ->setMethod('POST')
@@ -52,7 +63,7 @@ class TweetController extends Controller {
                 ->add('text', 'text')
                 ->add('save', 'submit', array('label' => 'Dodaj'))
                 ->getForm();
-        
+
         return $form;
     }
 
@@ -61,13 +72,13 @@ class TweetController extends Controller {
      */
     public function newAction() {
 
-            $tweet=new tweet();
-            $form=$this->createTweetForm($tweet);
-            
+        $tweet = new tweet();
+        $form = $this->createTweetForm($tweet);
+
 
 
         return $this->render('CLCodersLabBundle:Tweet:new.html.twig', array(
-                        'form'=>$form->createView()
+                    'form' => $form->createView()
         ));
     }
 
