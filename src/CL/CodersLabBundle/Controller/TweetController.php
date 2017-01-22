@@ -4,6 +4,8 @@ namespace CL\CodersLabBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use CL\CodersLabBundle\Entity\tweet;
+use CL\CodersLabBundle\Repository\tweetRepository;
 
 class TweetController extends Controller
 {
@@ -32,8 +34,10 @@ class TweetController extends Controller
      */
     public function showAllAction()
     {
+        $tweets=$this->getDoctrine()->getRepository('CLCodersLabBundle:tweet')->findAll();
+        
         return $this->render('CLCodersLabBundle:Tweet:show_all.html.twig', array(
-            // ...
+            'tweets'=>$tweets
         ));
     }
 

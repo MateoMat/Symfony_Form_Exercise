@@ -3,5 +3,17 @@
 {% block title %}CLCodersLabBundle:Tweet:showAll{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Tweet:showAll page</h1>
+
+    <a href="/new">Dodaj Tweet</a>
+    
+    {% for tweet in tweets %}
+        
+        <pre>
+            {{ tweet.name }}
+            {{tweet.text}}
+        </pre>
+        <hr>
+        
+    {% endfor %}
+
 {% endblock %}
