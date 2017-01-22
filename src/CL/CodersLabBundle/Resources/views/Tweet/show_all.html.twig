@@ -5,15 +5,16 @@
 {% block body %}
 
     <a href="/new">Dodaj Tweet</a>
-    
+
     {% for tweet in tweets %}
-        
+
         <pre>
             {{ tweet.name }}
             {{tweet.text}}
+            <a href="/update/{{tweet.id}}">Edytuj</a>
         </pre>
         <hr>
-        
+
     {% endfor %}
 
 {% endblock %}

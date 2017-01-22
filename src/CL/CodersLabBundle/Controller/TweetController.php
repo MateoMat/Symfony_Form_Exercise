@@ -12,11 +12,11 @@ class TweetController extends Controller {
 
     /**
      * 
-     * @Route(""/update/{id}",name="CLCoderslabBundle_tweet_update")
+     * @Route("/update/{id}",name="CLCoderslabBundle_tweet_update")
      */
     public function updateAction($id) {
 
-        $tweet = $this->getDoctrine()->getRepository('CLCodersLabBundle:tweet')->findOneBy($id);
+        $tweet = $this->getDoctrine()->getRepository('CLCodersLabBundle:tweet')->findOneById($id);
         $form = $this->createTweetForm($tweet);
 
         return $this->render('CLCodersLabBundle:Tweet:new.html.twig', array(
