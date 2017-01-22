@@ -24,7 +24,7 @@ class TweetController extends Controller {
      * Form builder for new and create actions
      */
 
-    private function createForm(tweet $tweetObj) {
+    private function createTweetForm(tweet $tweetObj) {
         
         $url=$this->generateUrl('CLCodersLabBundle_tweet_create');
         
@@ -45,7 +45,7 @@ class TweetController extends Controller {
     public function newAction() {
 
             $tweet=new tweet();
-            $form=$this->createForm($tweet);
+            $form=$this->createTweetForm($tweet);
             
 
 
