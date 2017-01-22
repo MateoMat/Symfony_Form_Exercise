@@ -44,11 +44,13 @@ class TweetController extends Controller {
      */
     public function newAction() {
 
-
+            $tweet=new tweet();
+            $form=$this->createForm($tweet);
+            
 
 
         return $this->render('CLCodersLabBundle:Tweet:new.html.twig', array(
-                        // ...
+                        'form'=>$form->createView()
         ));
     }
 
