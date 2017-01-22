@@ -10,7 +10,7 @@ use CL\CodersLabBundle\Repository\tweetRepository;
 class TweetController extends Controller {
 
     /**
-     * @Route("/create")
+     * @Route("/create",name="CLCodersLabBundle_tweet_create")
      */
     public function createAction() {
 
@@ -26,7 +26,7 @@ class TweetController extends Controller {
 
     private function createForm(tweet $tweetObj) {
         
-        $url=$this->generateUrl('create');
+        $url=$this->generateUrl('CLCodersLabBundle_tweet_create');
         
         $form = $this->createFormBuilder($tweetObj)
                 ->setAction($url)
